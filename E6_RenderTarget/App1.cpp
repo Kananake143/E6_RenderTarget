@@ -15,6 +15,16 @@ void App1::init(HINSTANCE hinstance, HWND hwnd, int screenWidth, int screenHeigh
 	// Create Mesh object and shader object
 	// Cube mesh is the geometry in the scene.
 	// Ortho mesh is the geometry we render the result to.
+	miniMapCamera = new Camera();
+	miniMapCamera->setPosition(0.0f, 20.0f, 0.0f);
+	miniMapCamera->setRotation(90.0f, 0.0f, 0.0f);
+
+	miniMapTexture = new RenderTexture(renderer->getDevice(), 
+    256, 256,SCREEN_NEAR, SCREEN_DEPTH);
+
+	miniMapOrtho = new OrthoMesh(renderer->getDevice(), 
+    renderer->getDeviceContext(), 200, 200, screenWidth/2 - 220, screenHeight/2 - 220);
+	
 	textureMgr->loadTexture(L"brick", L"res/brick1.dds");
 	cubeMesh = new CubeMesh(renderer->getDevice(), renderer->getDeviceContext());
 	sphereMesh = new SphereMesh(renderer->getDevice(), renderer->getDeviceContext());
