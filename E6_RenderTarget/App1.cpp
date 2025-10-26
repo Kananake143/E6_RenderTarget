@@ -160,8 +160,20 @@ void App1::finalPass()
 	orthoMesh->sendData(renderer->getDeviceContext());
 	textureShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, orthoViewMatrix, orthoMatrix, renderTexture->getShaderResourceView());
 	textureShader->render(renderer->getDeviceContext(), orthoMesh->getIndexCount());
+
+	XMMATRIX orthoMatrix = renderer->getOrthoMatrix();
+	XMMATRIX orthoViewMatrix = camera->getOrthoViewMatrix();
+
+	miniMapOrtho->sendData(renderer->getDeviceContext());
+
+	XMFLOAT3 playerPos = camera->getPosition(); //use minimapshader and send player position
+	miniMapShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, orthoViewMatrix, orthoMatrix, miniMapTexture->getShaderResourceView(),
+    XMFLOAT2(playerPos.x, playerPos.z),XMFLOAT2(20.0f, 20.0f)); //size map
+	
 	renderer->setZBuffer(true);
 
+	
+	
 	// Render GUI
 	gui();
 
