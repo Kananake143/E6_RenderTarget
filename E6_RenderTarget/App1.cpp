@@ -169,35 +169,20 @@ void App1::finalPass()
 	renderer->endScene();
 }
 
-void App1::secondPass()
+void App1::miniMapPass()
 {
-	// Set the render target to be the render to texture and clear it
-	renderTexture->setRenderTarget(renderer->getDeviceContext());
-	renderTexture->clearRenderTarget(renderer->getDeviceContext(), 0.0f, 0.0f, 1.0f, 1.0f);
+    
+    miniMapTexture->setRenderTarget(renderer->getDeviceContext());
+    miniMapTexture->clearRenderTarget(renderer->getDeviceContext(), 
+        0.2f, 0.2f, 0.2f, 1.0f);  // สีพื้นหลัง
 
-	// Get matrices
-	camera->update();
-	/*camera->setPosition(1.0f, 1.0f, 1.0f);
-	camera->setRotation(1.0f, 1.0f, 1.0f);*/
-	//camera->update();
-	XMMATRIX worldMatrix = renderer->getWorldMatrix();
-	XMMATRIX viewMatrix = camera->getViewMatrix();
-	XMMATRIX projectionMatrix = renderer->getProjectionMatrix();
-
-	// Render shape with simple lighting shader set.
-	cubeMesh->sendData(renderer->getDeviceContext());
-	lightShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, textureMgr->getTexture(L"brick"), light);
-	lightShader->render(renderer->getDeviceContext(), cubeMesh->getIndexCount());
-
-	worldMatrix *= XMMatrixTranslation(2.0f, 0.0f, 5.0f);
-	sphereMesh->sendData(renderer->getDeviceContext());
-	lightShader->setShaderParameters(renderer->getDeviceContext(), worldMatrix, viewMatrix, projectionMatrix, textureMgr->getTexture(L"brick"), light);
-	lightShader->render(renderer->getDeviceContext(), sphereMesh->getIndexCount());
-
-
-
-	// Reset the render target back to the original back buffer and not the render to texture anymore.
-	renderer->setBackBufferRenderTarget();
+    
+    miniMapCamera->update();
+    XMMATRIX viewMatrix = miniMapCamera->getViewMatrix();
+    
+    
+    
+    renderer->setBackBufferRenderTarget();
 }
 
 
