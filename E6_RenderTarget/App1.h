@@ -34,6 +34,9 @@ private:
 	RenderTexture* renderTexture;
 	RenderTexture* renderTexture1;
 	Light* light;
+
+	Camera* miniMapCamera;
+	RenderTexture* miniMapTexture;
 };
 
 #endif
